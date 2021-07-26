@@ -1,0 +1,18 @@
+FROM pytorch/pytorch
+
+ARG USER=docker
+ARG PASSWORD=docker
+ARG HOME=/home/${USER}
+
+ARG UID=1000
+ARG GID=1000
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PASSWORD}" | chpasswd
+
+RUN apt-get update
+RUN apt-get clean
+
+USER ${UID}:${GID}
+WORKDIR ${HOME}

@@ -1,17 +1,19 @@
-FROM pytorch/pytorch
+FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime
 
 ARG USER=docker
+ARG GROUP=docker
 ARG PASSWORD=docker
 ARG HOME=/home/${USER}
 
-ARG UID=1000
+ARG UID=1000 # mod to your host user uid
 ARG GID=1000
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PASSWORD}" | chpasswd
+RUN groupadd -g ${GID} ${GROUP} && useradd -m ${USER} --uid=${UID} --gid=${GID} && echo "${USER}:${PASSWORD}" | chpasswd
 
 RUN apt-get update
+RUN apt-get install -y git locales sudo && adduser ${USER} sudo
 RUN apt-get clean
 
 USER ${UID}:${GID}

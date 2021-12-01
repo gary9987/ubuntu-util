@@ -1,0 +1,20 @@
+FROM tensorflow/tensorflow:latest-gpu
+
+ARG USER=docker
+ARG GROUP=docker
+ARG PASSWORD=docker
+ARG HOME=/home/${USER}
+
+ARG UID=1000 # mod to your host user uid
+ARG GID=1000
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN groupadd -g ${GID} ${GROUP} && useradd -m ${USER} --uid=${UID} --gid=${GID} && echo "${USER}:${PASSWORD}" | chpasswd
+
+RUN apt-get update
+RUN apt-get install -y git locales sudo && adduser ${USER} sudo
+RUN apt-get clean
+
+USER ${UID}:${GID}
+WORKDIR ${HOME}

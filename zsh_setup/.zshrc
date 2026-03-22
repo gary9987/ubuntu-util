@@ -99,3 +99,26 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Custom Settings by garychen
+# Custom Spaceship prompt order, removing time-consuming checks like node, docker, python
+SPACESHIP_PROMPT_ORDER=(
+  user
+  host
+  dir
+  git
+  exec_time
+  line_sep
+  char
+)
+
+# Disable package version checks, which significantly slow down the Windows file system
+SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_NODE_SHOW=false
+
+# Simplify Git checks to avoid deep scanning of large repositories
+SPACESHIP_GIT_STATUS_SHOW=false
+SPACESHIP_GIT_BRANCH_SHOW=true
+
+# Disable async prompt rendering to fix Git branch missing issue on Git Bash
+SPACESHIP_PROMPT_ASYNC=false
